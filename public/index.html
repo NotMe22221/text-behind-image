@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>App Running</title>
+    <style>
+      :root { --bg: #0b1020; --card: #111833; --text: #e6e9f2; --accent: #4f7cff; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: var(--bg); color: var(--text); }
+      .viewport-center { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+      .status-card { background: var(--card); border-radius: 16px; padding: 28px 24px; max-width: 640px; width: 100%; box-shadow: 0 8px 30px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.06); }
+      .status-title { margin: 0 0 8px; font-size: 20px; font-weight: 700; letter-spacing: .2px; }
+      .status-subtitle { margin: 0 0 16px; color: #b8c0d9; font-size: 14px; }
+      .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(79,124,255,.14); color: var(--accent); font-weight: 600; font-size: 12px; border: 1px solid rgba(79,124,255,.35); }
+      .list { margin: 16px 0 0; padding: 0 0 0 18px; color: #c8d0ea; }
+      .list li { margin: 6px 0; }
+      @media (max-width: 480px) { .status-card { padding: 22px 18px; border-radius: 14px; } .status-title { font-size: 18px; } }
+    </style>
+  </head>
+  <body>
+    <main class="viewport-center">
+      <section class="status-card" aria-live="polite">
+        <div class="badge">OK</div>
+        <h1 class="status-title">Your dev server is up</h1>
+        <p class="status-subtitle">Static server running on port 3000.</p>
+        <ul class="list">
+          <li>Add your app files under <code>/public</code>.</li>
+          <li>Edit <code>server.js</code> to customize routing.</li>
+          <li>Use the history tab to revert any change if needed.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
