@@ -1,0 +1,55 @@
+/* Theme tokens (preserve original variable names and values) */
+:root { --bg: #0b1020; --card: #111833; --text: #e6e9f2; --accent: #4f7cff; }
+
+/* Resets */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: var(--bg); color: var(--text); }
+
+/* Layout */
+.page-viewport { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+.app-header { padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,.06); backdrop-filter: saturate(140%) blur(6px); position: sticky; top: 0; z-index: 10; }
+.branding { display: flex; align-items: center; gap: 10px; }
+.brand-dot { width: 10px; height: 10px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 3px rgba(79,124,255,.2); }
+.brand-title { font-weight: 800; letter-spacing: .3px; }
+
+.app-main { display: grid; grid-template-columns: 320px 1fr; gap: 16px; padding: 16px; }
+.panel { background: var(--card); border-radius: 16px; border: 1px solid rgba(255,255,255,.06); box-shadow: 0 8px 30px rgba(0,0,0,.35); }
+.controls-panel { padding: 14px; display: grid; gap: 14px; align-content: start; }
+.preview-panel { position: relative; display: grid; }
+
+/* Buttons and inputs */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.08); background: rgba(79,124,255,.14); color: var(--accent); font-weight: 700; font-size: 12px; cursor: pointer; user-select: none; }
+.btn:hover { background: rgba(79,124,255,.18); }
+.btn.ghost { background: transparent; color: #c4cbe6; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.input, .select { width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: #0e142b; color: var(--text); }
+.label { font-size: 12px; color: #b8c0d9; margin-bottom: 6px; }
+.field { display: grid; gap: 6px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.section { display: grid; gap: 10px; padding: 10px; border-radius: 12px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.04); }
+.section-title { margin: 0; font-size: 12px; color: #c8d0ea; text-transform: uppercase; letter-spacing: .8px; }
+
+/* Canvas preview */
+.canvas-wrap { position: relative; border-radius: 16px; overflow: hidden; margin: 12px; background: #0e142b; border: 1px solid rgba(255,255,255,.06); }
+#previewCanvas { width: 100%; height: 100%; display: block; aspect-ratio: 16/10; }
+.overlay { position: absolute; inset: 0; pointer-events: none; }
+.grid-hint { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size: 20px 20px; }
+
+.mask-hint { position: absolute; inset: 0; pointer-events: none; }
+.mask-tools { position: absolute; left: 12px; top: 12px; display: flex; gap: 8px; pointer-events: auto; }
+
+.badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(79,124,255,.14); color: var(--accent); font-weight: 600; font-size: 12px; border: 1px solid rgba(79,124,255,.35); }
+.subtitle { margin: 0 0 8px; color: #b8c0d9; font-size: 14px; }
+
+/* Footer */
+.app-footer { padding: 14px 20px; color: #b8c0d9; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,.06); }
+
+/* Responsive (preserve original media query and value) */
+@media (max-width: 480px) {
+  .app-main { grid-template-columns: 1fr; }
+  .controls-panel { order: 2; }
+  .preview-panel { order: 1; min-height: 320px; }
+}

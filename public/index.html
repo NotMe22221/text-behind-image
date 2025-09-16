@@ -3,33 +3,140 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>App Running</title>
-    <style>
-      :root { --bg: #0b1020; --card: #111833; --text: #e6e9f2; --accent: #4f7cff; }
-      * { box-sizing: border-box; }
-      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: var(--bg); color: var(--text); }
-      .viewport-center { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
-      .status-card { background: var(--card); border-radius: 16px; padding: 28px 24px; max-width: 640px; width: 100%; box-shadow: 0 8px 30px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.06); }
-      .status-title { margin: 0 0 8px; font-size: 20px; font-weight: 700; letter-spacing: .2px; }
-      .status-subtitle { margin: 0 0 16px; color: #b8c0d9; font-size: 14px; }
-      .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(79,124,255,.14); color: var(--accent); font-weight: 600; font-size: 12px; border: 1px solid rgba(79,124,255,.35); }
-      .list { margin: 16px 0 0; padding: 0 0 0 18px; color: #c8d0ea; }
-      .list li { margin: 6px 0; }
-      @media (max-width: 480px) { .status-card { padding: 22px 18px; border-radius: 14px; } .status-title { font-size: 18px; } }
-    </style>
+    <title>Text Behind Image Tool</title>
+    <link rel="stylesheet" href="./styles/app.css" />
   </head>
   <body>
-    <main class="viewport-center">
-      <section class="status-card" aria-live="polite">
-        <div class="badge">OK</div>
-        <h1 class="status-title">Your dev server is up</h1>
-        <p class="status-subtitle">Static server running on port 3000.</p>
-        <ul class="list">
-          <li>Add your app files under <code>/public</code>.</li>
-          <li>Edit <code>server.js</code> to customize routing.</li>
-          <li>Use the history tab to revert any change if needed.</li>
-        </ul>
-      </section>
-    </main>
+    <div class="page-viewport">
+      <header class="app-header panel">
+        <div class="branding">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <strong class="brand-title">Text Behind Image</strong>
+          <span class="badge" id="maskBadge">View mode</span>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <aside class="controls-panel panel" aria-label="Controls">
+          <p class="subtitle">Create the classic text-behind-subject effect in your browser. No uploads.</p>
+
+          <section class="section">
+            <h3 class="section-title">Image</h3>
+            <div class="field">
+              <label class="label" for="fileInput">Upload image</label>
+              <input class="input" type="file" id="fileInput" accept="image/*" />
+            </div>
+            <div class="btn-row" style="margin-top:6px;">
+              <button class="btn" id="toggleMaskMode" type="button">Edit Mask</button>
+              <button class="btn ghost" id="undoMask" type="button">Undo</button>
+              <button class="btn ghost" id="resetMask" type="button">Reset</button>
+              <button class="btn ghost" id="finishMask" type="button">Finish</button>
+            </div>
+            <div class="btn-row" style="margin-top:6px;">
+              <button class="btn ghost" id="exportMask" type="button">Export Mask</button>
+              <button class="btn ghost" id="importMask" type="button">Import Mask</button>
+              <input class="input" type="file" id="maskFile" accept="application/json" hidden />
+            </div>
+          </section>
+
+          <section class="section">
+            <h3 class="section-title">Text</h3>
+            <div class="field">
+              <label class="label" for="textInput">Content</label>
+              <textarea class="input" id="textInput" rows="3" placeholder="Type your headline here">BEHIND</textarea>
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label class="label" for="fontFamily">Font</label>
+                <select class="select" id="fontFamily">
+                  <option value="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">System UI</option>
+                  <option value="Georgia, serif">Georgia</option>
+                  <option value="'Trebuchet MS', Helvetica, Arial, sans-serif">Trebuchet</option>
+                  <option value="Impact, Charcoal, sans-serif">Impact</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="label" for="fontSize">Size</label>
+                <input class="input" type="number" id="fontSize" value="120" min="8" max="400" />
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label class="label" for="fontWeight">Weight</label>
+                <input class="input" type="number" id="fontWeight" value="900" min="100" max="1000" step="100" />
+              </div>
+              <div class="field">
+                <label class="label" for="textAlign">Align</label>
+                <select class="select" id="textAlign">
+                  <option value="center" selected>Center</option>
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label class="label" for="textColor">Fill</label>
+                <input class="input" type="color" id="textColor" value="#e6e9f2" />
+              </div>
+              <div class="field">
+                <label class="label" for="strokeColor">Outline</label>
+                <input class="input" type="color" id="strokeColor" value="#0b1020" />
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label class="label" for="strokeWidth">Outline width</label>
+                <input class="input" type="number" id="strokeWidth" value="8" min="0" max="40" />
+              </div>
+              <div class="field">
+                <label class="label" for="rotation">Rotation (deg)</label>
+                <input class="input" type="number" id="rotation" value="0" min="-180" max="180" />
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label class="label" for="lineHeight">Line height</label>
+                <input class="input" type="number" id="lineHeight" value="1.1" step="0.05" min="0.6" max="2.0" />
+              </div>
+              <div class="field">
+                <label class="label" for="letterSpacing">Letter spacing</label>
+                <input class="input" type="number" id="letterSpacing" value="0" step="0.5" min="-10" max="40" />
+              </div>
+            </div>
+            <div class="btn-row">
+              <button class="btn" id="downloadPng" type="button">Download PNG</button>
+              <button class="btn ghost" id="downloadJpg" type="button">Download JPG</button>
+            </div>
+          </section>
+
+          <section class="section">
+            <h3 class="section-title">Tips</h3>
+            <ul class="subtitle" style="margin:0; padding-left:18px;">
+              <li>Switch to Edit Mask and click to outline your subject.</li>
+              <li>Drag the text on the canvas to position it.</li>
+              <li>Use Export/Import to save and continue later.</li>
+            </ul>
+          </section>
+        </aside>
+
+        <section class="preview-panel panel" aria-label="Preview">
+          <div class="canvas-wrap">
+            <canvas id="previewCanvas" aria-label="Preview canvas"></canvas>
+            <div class="overlay grid-hint" aria-hidden="true"></div>
+            <div class="mask-tools">
+              <span class="badge">OK</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer panel">
+        <div>Static server running on port 3000.</div>
+        <div><span class="badge">OK</span></div>
+      </footer>
+    </div>
+
+    <script src="./scripts/app.js" defer></script>
   </body>
 </html>
