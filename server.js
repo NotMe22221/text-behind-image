@@ -48,7 +48,8 @@ const server = http.createServer((req, res) => {
   let pathname = decodeURIComponent(parsed.pathname || '/');
 
   // Normalize and prevent path traversal
-  const safePath = path.normalize(path.join(publicDir, pathname));
+  const relPath = pathname.replace(/^\/+/, '');
+  const safePath = path.normalize(path.join(publicDir, relPath));
   if (!isPathInside(publicDir, safePath) && safePath !== publicDir) {
     res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
     return res.end('403 Forbidden');
